@@ -14,7 +14,7 @@ class Directory extends React.Component {
                     title: 'hats',
                     imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
                     id: 1,
-                    linkUrl: 'shop/hats'
+                    linkUrl: 'shop/hats',
                 },
                 {
                     title: 'jackets',
@@ -46,17 +46,31 @@ class Directory extends React.Component {
         }
     }
 
+    //con shortcuts sulle props
     render(){
-        return (
+        return(
             <div className='directory-menu'>
                 {
-                    this.state.sections.map(({title, imageUrl, id, size}) => (
-                        <MenuItem key={id} title={title} imageUrl={imageUrl} size={size}/>
+                    this.state.sections.map(({id, ...otherSectionProps}) => (
+                        <MenuItem key={id} {...otherSectionProps} />
                     ))
                 }
             </div>
         )
     }
+
+    //senza shortCuts sulle props
+    // render(){
+    //     return (
+    //         <div className='directory-menu'>
+    //             {
+    //                 this.state.sections.map(({title, imageUrl, id, size, linkUrl}) => (
+    //                     <MenuItem key={id} title={title} imageUrl={imageUrl} size={size} linkUrl={linkUrl}/>
+    //                 ))
+    //             }
+    //         </div>
+    //     )
+    // }
 
     //nota potevo avere lo stesso risultato usando
     // render(){
