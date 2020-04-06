@@ -6,7 +6,8 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component'
+import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 
 //Questo era il codice prima del Route Component, il nuovo codice segue il commento ***
@@ -18,10 +19,12 @@ import ShopPage from './pages/shop/shop.component'
 //   );
 // }
 
-//***, Nota switch lo ho aggiunto dopo per fare il wrapping di Route componetn
+//***, Nota switch lo ho aggiunto dopo per fare il wrapping di Route component
+//Nota Header va fuori dallo switch perché é sempre presente
     function App() {
         return(
             <div>
+                <Header/>
                 <Switch>
                     <Route exact path='/' component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
