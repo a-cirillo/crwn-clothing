@@ -13,37 +13,21 @@ import Header from './components/header/header.component';
 import { auth } from "./firebase/firebase.utils";
 
 
+//Questo era il codice prima del Route Component, il nuovo codice segue il commento ***
+// function App() {
+//   return (
+//     <div>
+//       <HomePage/>
+//     </div>
+//   );
+// }
+
 //***, Nota switch lo ho aggiunto dopo per fare il wrapping di Route component
 //Nota Header va fuori dallo switch perché é sempre presente
-class App extends React.Component{
-    constructor(){
-        super();
-
-        this.state = {
-            currentUser: null
-        }
-
-    }
-
-    unsubscribeFromAuth = null;
-
-    componentDidMount() {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-            this.setState({ currentUser: user });
-
-            console.log(user)
-        })
-    }
-
-
-    componentWillUnmount(){
-        this.unsubscribeFromAuth();
-    }
-
-    render() {
+    function App() {
         return(
             <div>
-                <Header currentUser={this.state.currentUser} />
+                <Header/>
                 <Switch>
                     <Route exact path='/' component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
@@ -52,7 +36,6 @@ class App extends React.Component{
             </div>
         )
     }
-}
 //Nota a margine le props di Route sono abbastanza esplicative solo exact che non è espresso è un boolenano, se è false è come un RenderPartial, se non voglio usarlo
 //mi basta fare il wrapper di Route component in Switch
 
