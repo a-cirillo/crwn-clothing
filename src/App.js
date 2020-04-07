@@ -1,7 +1,7 @@
 import React from 'react';
 
 //import il componente Route da react-router-dom, in seconda battuta uso Switch component
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -73,7 +73,14 @@ class App extends React.Component{
                 <Switch>
                     <Route exact path='/' component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
-                    <Route path='/signin' component={SignInAndSignUp}/>
+                    {/*<Route exact path='/signin' component={SignInAndSignUp}/>*/}
+                    <Route exact path='/signin'
+                           render={() =>
+                            this.props.currentUser ?
+                                (<Redirect to='/' />)
+                                :
+                                (<SignInAndSignUp/>)
+                           }/>
                 </Switch>
             </div>
         )
@@ -82,7 +89,13 @@ class App extends React.Component{
 //Nota a margine le props di Route sono abbastanza esplicative solo exact che non è espresso è un boolenano, se è false è come un RenderPartial, se non voglio usarlo
 //mi basta fare il wrapper di Route component in Switch
 
+
+
+const mapStateToProps = ({ user }) => ({
+   currentUser: user.currentUser
+});
+
 const mapDispatchProps = dispatch => ({
     setCurrentUser: user => dispatch(setCurrentUser(user))
 });
-export default connect(null, mapDispatchProps)(App);
+export default connect(mapStateToProps, mapDispatchProps)(App);
