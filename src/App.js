@@ -10,7 +10,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 
 //***, Nota switch lo ho aggiunto dopo per fare il wrapping di Route component
@@ -28,10 +28,27 @@ class App extends React.Component{
     unsubscribeFromAuth = null;
 
     componentDidMount() {
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-            this.setState({ currentUser: user });
+        this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+            // this.setState({ currentUser: user });
+            if(userAuth){
+                const userRef = await createUserProfileDocument(userAuth);
 
-            console.log(user)
+                userRef.onSnapshot(snapshot => {
+                    // console.log(snapshot.data())
+                    this.setState({
+                        currentUser:{
+                            id: snapshot.id,
+                            ...snapshot.data()
+                        }
+                    }, () => {
+                        console.log(this.state)
+                    })
+                })
+            }else{
+                this.setState({currentUser: userAuth})
+            }
+
+            // console.log(user)
         })
     }
 
