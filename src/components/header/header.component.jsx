@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//importo un altro high component, questo serve a connetersi con Redux e nell'export farò iil wrapping del componente
+import { connect } from 'react-redux'
+
 import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { auth } from "../../firebase/firebase.utils";
 
@@ -29,4 +33,9 @@ const Header = ({ currentUser }) => (
     </div>
 );
 
-export default Header;
+//l'argomento state è il routeReducer
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(Header);
