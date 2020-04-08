@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectCartItems } from "../../redux/cart/cart.selectors";
 
 import CustomButton from '../../components/custom-button/custom-button.component';
 import CartItem from '../../components/cart-item/cart-item.component';
@@ -21,8 +22,12 @@ const CartDropdown = ({cartItems}) => (
 );
 
 //l'argomento state è il routeReducer
-const mapStateToProps = ({cart: { cartItems }}) => ({
-    cartItems
+// const mapStateToProps = ({cart: { cartItems }}) => ({
+//     cartItems
+// });
+
+const mapStateToProps = state => ({
+    cartItems: selectCartItems(state)
 });
 
 export default connect(mapStateToProps)(CartDropdown);
