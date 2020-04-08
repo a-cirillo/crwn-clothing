@@ -3,11 +3,14 @@ import React from 'react';
 //import il componente Route da react-router-dom, in seconda battuta uso Switch component
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import ChechoutPage from './pages/checkout/checkout.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 
@@ -73,7 +76,7 @@ class App extends React.Component{
                 <Switch>
                     <Route exact path='/' component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
-                    {/*<Route exact path='/signin' component={SignInAndSignUp}/>*/}
+                    <Route exact path='/checkout' component={ChechoutPage}/>
                     <Route exact path='/signin'
                            render={() =>
                             this.props.currentUser ?
@@ -91,8 +94,12 @@ class App extends React.Component{
 
 
 
-const mapStateToProps = ({ user }) => ({
-   currentUser: user.currentUser
+// const mapStateToProps = ({ user }) => ({
+//    currentUser: user.currentUser
+// });
+
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
 });
 
 const mapDispatchProps = dispatch => ({
