@@ -25,3 +25,48 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
         return [...cartItems, {...cartItemToAdd, quantity: 1}];
     }
 };
+
+export const clearItem = (cartItems, cartItemToClear) => {
+    const existingCartItem = cartItems.find(
+        cartItem => cartItem.id === cartItemToClear.id
+    );
+
+    //ora faccio il check su existingCartItems che potrà essere true o false
+    if(existingCartItem){
+        //anche filter è iterativo come il foreach
+        return cartItems.filter(
+            cartItem => cartItem.id !== cartItemToClear.id
+        );
+
+    }else{
+        return [...cartItems];
+    }
+};
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+    const existingCartItem = cartItems.find(
+        cartItem => cartItem.id === cartItemToRemove.id
+    );
+
+
+    if(existingCartItem.quantity === 1){
+        return cartItems.filter(
+            cartItem => cartItem.id !== cartItemToRemove.id
+        );
+    }
+
+    //ora faccio il check su existingCartItems che potrà essere true o false
+    if(existingCartItem){
+        //anche filter è iterativo come il foreach
+        return cartItems.map(
+            cartItem =>
+                cartItem.id === cartItemToRemove.id ?
+                    {...cartItem, quantity: cartItem.quantity - 1}
+                    :
+                    cartItem
+        );
+
+    }else{
+        return [...cartItems];
+    }
+};
